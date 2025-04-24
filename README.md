@@ -139,6 +139,7 @@ Smart Budget App is a modern finance tracker that allows users to record their e
 - Plan to use Firebase Authorization, Storage, RealTime Database to handle database and authorization process. Firebase provides official SDKs for iOS app development rather than direct API endpoints.
 
 #### Basic Network Request Example
+- (Optional) AI Assistant feature, using OpenAI API
 ```swift
 func analyzeExpenseWithOpenAI() {
     let url = URL(string: "https://api.openai.com/v1/chat/completions")!
