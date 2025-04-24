@@ -98,15 +98,160 @@ Smart Budget App is a modern finance tracker that allows users to record their e
 [Prototype Link](https://www.figma.com/proto/yH01ZdKka31RWoThjWFa4y/smart-budget-app?node-id=8-1114&t=TFwcKOOQDYJr0xkB-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1)
 
 ## Schema 
-
-[This section will be completed in Unit 9]
-
 ### Models
+#### User
+| Property     | Type     | Description |
+| ------------ | -------- | ----------- |
+| userid       | String   | unique identifier for the user |
+| username     | String   | username for login |
+| email        | String   | user's email address |
+| password     | String   | user's password |
 
-[Add table of models]
+
+#### Expense
+| Property      | Type     | Description |
+| ------------- | -------- | ----------- |
+| expenseid     | String   | unique identifier for the epxense |
+| title         | String   | title of the expense |
+| amount        | Double   | the amount of the expense |
+| category      | String   | type of expense |
+| date          | DateTime | the date that spends this expense |
+
+#### Group
+| Property     | Type     | Description |
+| ------------ | -------- | ----------- |
+| groupid      | String   | unique identifier for the group |
+| groupmembers | Array    | array of member id|
+| groupname    | String   | name of the group |
+
+#### Group Expense
+| Property      | Type     | Description |
+| ------------- | -------- | ----------- |
+| expenseid     | String   | unique identifier for the epxense |
+| title         | String   | title of the expense |
+| amount        | Double   | the amount of the expense |
+| paidby        | String   | who paid this expense |
+
+
 
 ### Networking
 
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+- Plan to use Firebase Authorization, Storage, RealTime Database to handle database and authorization process. Firebase provides official SDKs for iOS app development rather than direct API endpoints.
+
+#### Basic Network Request Example
+```swift
+func analyzeExpenseWithOpenAI() {
+    let url = URL(string: "https://api.openai.com/v1/chat/completions")!
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.setValue("Bearer YOUR_API_KEY", forHTTPHeaderField: "Authorization")
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let payload: [String: Any] = [
+        "model": "gpt-4-turbo",
+        "messages": [
+            ["role": "user", "content": "Help me analyze my expense."]
+        ],
+        "tools": [
+            [
+                "type": "file_search"
+            ]
+        ],
+        "tool_choice": "auto"
+    ]
+    
+    // Encode the payload to JSON
+    guard let jsonData = try? JSONSerialization.data(withJSONObject: payload) else {
+        print("Error encoding JSON payload.")
+        return
+    }
+    
+    // First, upload the file to OpenAI's file API
+    uploadExpensePDF { fileID in
+        guard let fileID = fileID else {
+            print("Failed to upload file.")
+            return
+        }
+        
+        // Now attach the file_id to the messages
+        let updatedPayload: [String: Any] = [
+            "model": "gpt-4-turbo",
+            "messages": [
+                ["role": "user", "content": "Help me analyze my expense."]
+            ],
+            "tool_choice": "auto",
+            "tools": [
+                ["type": "file_search"]
+            ],
+            "file_ids": [fileID]
+        ]
+        
+        guard let updatedData = try? JSONSerialization.data(withJSONObject: updatedPayload) else {
+            print("Error encoding updated JSON payload.")
+            return
+        }
+        
+        request.httpBody = updatedData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received.")
+                return
+            }
+            
+            if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+                print("Response: \(json)")
+            } else {
+                print("Failed to decode JSON response.")
+            }
+        }
+        
+        task.resume()
+    }
+}
+
+func uploadExpensePDF(completion: @escaping (String?) -> Void) {
+    let url = URL(string: "https://api.openai.com/v1/files")!
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    
+    let boundary = UUID().uuidString
+    request.setValue("Bearer YOUR_API_KEY", forHTTPHeaderField: "Authorization")
+    request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+    
+    // Locate expense.pdf in your app bundle or file system
+    guard let fileURL = Bundle.main.url(forResource: "expense", withExtension: "pdf"),
+          let fileData = try? Data(contentsOf: fileURL) else {
+        completion(nil)
+        return
+    }
+    
+    var body = Data()
+    body.append("--\(boundary)\r\n".data(using: .utf8)!)
+    body.append("Content-Disposition: form-data; name=\"file\"; filename=\"expense.pdf\"\r\n".data(using: .utf8)!)
+    body.append("Content-Type: application/pdf\r\n\r\n".data(using: .utf8)!)
+    body.append(fileData)
+    body.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+    
+    request.httpBody = body
+    
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        guard let data = data,
+              let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+              let fileID = json["id"] as? String else {
+            completion(nil)
+            return
+        }
+        
+        completion(fileID)
+    }
+    
+    task.resume()
+}
+```
