@@ -187,7 +187,7 @@
         <!--Spending Groups-->
         <scene sceneID="Kk1-iq-U0G">
             <objects>
-                <viewController id="8Ly-GW-DWG" sceneMemberID="viewController">
+                <viewController id="8Ly-GW-DWG" customClass="GroupsViewController" customModule="SmartBudget" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qhq-O2-vY3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -197,7 +197,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="103" id="x6Y-SO-PuT">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupCell" rowHeight="103" id="x6Y-SO-PuT" customClass="GroupCell" customModule="SmartBudget" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="103"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="x6Y-SO-PuT" id="AP8-O9-KIR">
@@ -217,6 +217,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="groupNameLabel" destination="mJO-bE-p8A" id="QZL-zJ-awE"/>
                                             <segue destination="6u2-NY-lZ2" kind="show" id="V9p-Bm-s3Z"/>
                                         </connections>
                                     </tableViewCell>
@@ -227,7 +228,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Spending Groups" id="Ax7-K1-cQ1">
-                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="jZ7-iT-YcD"/>
+                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="jZ7-iT-YcD">
+                            <connections>
+                                <action selector="didTapAddGroupButton:" destination="8Ly-GW-DWG" id="ubE-uS-1B2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uLP-a0-t0A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -300,12 +305,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Group Details" id="3R1-yv-ZAW">
-                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="dwk-dJ-WDv">
-                            <connections>
-                                <segue destination="uwP-tb-V5I" kind="show" id="IBM-TI-nux"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="dwk-dJ-WDv"/>
                     </navigationItem>
+                    <connections>
+                        <segue destination="cAl-vi-06r" kind="presentation" id="GCU-8n-mcc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xhf-Ba-LEz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -320,7 +324,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="lfc-gO-G1B">
-                                <rect key="frame" x="24" y="80" width="345" height="223"/>
+                                <rect key="frame" x="24" y="80" width="345" height="262"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="216-Vq-fNj">
                                         <rect key="frame" x="0.0" y="0.0" width="345" height="54.666666666666664"/>
@@ -339,23 +343,23 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="RPS-Ou-znY">
-                                        <rect key="frame" x="0.0" y="78.666666666666657" width="345" height="65.666666666666657"/>
+                                        <rect key="frame" x="0.0" y="78.666666666666657" width="345" height="104.66666666666666"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZUX-Pb-jac">
-                                                <rect key="frame" x="0.0" y="0.0" width="60" height="65.666666666666671"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="104.66666666666667"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8he-eq-Q59">
-                                                <rect key="frame" x="76" y="0.0" width="269" height="65.666666666666671"/>
+                                                <rect key="frame" x="76" y="0.0" width="269" height="104.66666666666667"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="E1S-xJ-6SX">
-                                        <rect key="frame" x="0.0" y="168.33333333333334" width="345" height="54.666666666666657"/>
+                                        <rect key="frame" x="0.0" y="207.33333333333331" width="345" height="54.666666666666686"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paid By" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YBa-cr-LsG">
                                                 <rect key="frame" x="0.0" y="0.0" width="56.666666666666664" height="54.666666666666664"/>
@@ -399,7 +403,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LQM-H5-hCb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2752" y="1468"/>
+            <point key="canvasLocation" x="3678.6259541984732" y="1467.605633802817"/>
         </scene>
         <!--Add Expense-->
         <scene sceneID="cfy-eD-aDc">
@@ -789,6 +793,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sDb-VL-PYF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-19" y="2423"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="oWk-JQ-sWN">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cAl-vi-06r" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bDA-mc-izx">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="uwP-tb-V5I" kind="relationship" relationship="rootViewController" id="y9C-3W-dd8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vJq-dk-WeN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2751.9083969465646" y="1467.605633802817"/>
         </scene>
     </scenes>
     <resources>
