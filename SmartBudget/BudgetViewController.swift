@@ -7,44 +7,109 @@
 
 import UIKit
 
-class BudgetViewController: UIViewController, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pieChartData.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BudgetCell") ?? UITableViewCell(style: .value1, reuseIdentifier: "BudgetCell")
-        
-        let data = pieChartData[indexPath.row]
-        cell.textLabel?.text = data.category
-        cell.detailTextLabel?.text = "$\(Int(data.value))"
-        
-        // Create color indicator view
-        let colorIndicator = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        colorIndicator.backgroundColor = data.color
-        colorIndicator.layer.cornerRadius = 10
-        cell.accessoryView = colorIndicator
-        
-        return cell
-    }
+class BudgetViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var pieChartView: PieChartView!
+    @IBOutlet weak var emptyStateLabel: UILabel!
     
-    private var pieChart: PieChartView!
-    private var pieChartData: [(category: String, value: Double, color: UIColor)] = [
-           ("Food", 300, .systemRed),
-           ("Transportation", 250, .systemBlue),
-           ("Entertainment", 150, .systemGreen),
-           ("Utilities", 200, .systemOrange),
-           ("Others", 100, .systemPurple)
-       ]
+    // The main expenses array initialized with a default value of an empty array
+    var expenses = [Expense]()
+    
+    // Category color mapping
+    private let categoryColors: [String: UIColor] = [
+        "Food": UIColor(hex: "#F7CAC9"),
+        "Transportation": UIColor(hex: "#6B5B95"),
+        "Entertainment": UIColor(hex: "#FF6F61"),
+        "Other": UIColor(hex: "#88B04B")
+    ]
+    
+    // Category data for pie chart
+    private var categoryData: [(category: String, value: Double, color: UIColor)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set table view data source and delegate
         tableView.dataSource = self
-        // Do any additional setup after loading the view.
+        tableView.delegate = self
+        
+        // Hide top cell separator
+        tableView.tableHeaderView = UIView()
+        
         setupPieChart()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        refreshExpenses()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ComposeSegue" {
+            if let composeNavController = segue.destination as? UINavigationController,
+               let composeViewController = composeNavController.topViewController as? ExpenseComposeViewController{
+                composeViewController.onComposeExpense = { [weak self] expense in
+                    print("###prepare")
+                    print(expense)
+                    expense.save()
+                    self?.refreshExpenses()
+                }
+            }
+        }
+    }
+    
+    // MARK: - Helper Functions
+    
+    private func refreshExpenses() {
+        // Get current saved expenses
+        var expenses = Expense.getExpense()
+        
+        // Sort from new to old
+        expenses.sort { $0.date > $1.date }
+        
+        // Update the main expenses array
+        self.expenses = expenses
+        
+        // Hide the "empty state label" if there are expenses
+        emptyStateLabel.isHidden = !expenses.isEmpty
+        
+        // Calculate category data for pie chart
+        calculateCategoryData()
+        
+        // Update pie chart with new data
+        updatePieChart()
+        
+        // Reload the table view to reflect updates
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
+    
+    private func calculateCategoryData() {
+        // Reset category data
+        categoryData = []
+        
+        // Get total amount
+        let totalAmount = expenses.reduce(0) { $0 + $1.amount }
+        
+        // Skip calculation if total is zero
+        guard totalAmount > 0 else { return }
+        
+        // Group expenses by category and sum amounts
+        var categoryAmounts: [String: Double] = [:]
+        
+        for expense in expenses {
+            let category = expense.category
+            categoryAmounts[category, default: 0] += expense.amount
+        }
+        
+        // Convert to data format needed for pie chart
+        for (category, amount) in categoryAmounts {
+            let color = categoryColors[category] ?? .systemGray
+            categoryData.append((category: category, value: amount, color: color))
+        }
+        
+        // Sort by value (optional)
+        categoryData.sort { $0.value > $1.value }
     }
     
     private func setupPieChart() {
@@ -52,19 +117,41 @@ class BudgetViewController: UIViewController, UITableViewDataSource {
         pieChartView.subviews.forEach { $0.removeFromSuperview() }
         
         // Create pie chart with the same frame as the placeholder
-        pieChart = PieChartView(frame: pieChartView.bounds)
+        let pieChart = PieChartView(frame: pieChartView.bounds)
         pieChart.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         // Configure the doughnut appearance
-        pieChart.innerRadiusRatio = 0.6 // Adjust this value to control hole size (0.0-1.0)
-        pieChart.strokeWidth = 2.0 // Slightly thicker border between slices
+        pieChart.innerRadiusRatio = 0.6
+        pieChart.strokeWidth = 2.0
         pieChart.strokeColor = .white
         
-        // Add sample data
-        pieChart.addSlice(value: 45, color: .systemPurple) // Purple slice (largest)
-        pieChart.addSlice(value: 20, color: .systemPink)   // Pink slice
-        pieChart.addSlice(value: 15, color: .systemRed)    // Red slice
-        pieChart.addSlice(value: 20, color: .systemGreen)  // Green slice
+        // Add to view
+        pieChartView.addSubview(pieChart)
+    }
+    
+    private func updatePieChart() {
+        // Remove any existing pie chart
+        pieChartView.subviews.forEach { $0.removeFromSuperview() }
+        
+        // Create new pie chart
+        let pieChart = PieChartView(frame: pieChartView.bounds)
+        pieChart.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        // Configure appearance
+        pieChart.innerRadiusRatio = 0.6
+        pieChart.strokeWidth = 2.0
+        pieChart.strokeColor = .white
+        
+        // Add slices based on category data
+        if categoryData.isEmpty {
+            // Add empty state with placeholder data
+            pieChart.addSlice(value: 1, color: .systemGray4)
+        } else {
+            // Add slices for each category
+            for data in categoryData {
+                pieChart.addSlice(value: data.value, color: data.color)
+            }
+        }
         
         // Add to view
         pieChartView.addSubview(pieChart)
@@ -73,15 +160,110 @@ class BudgetViewController: UIViewController, UITableViewDataSource {
         pieChart.setNeedsDisplay()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Actions
+    
+    @IBAction func didTapNewExpenseButton(_ sender: Any) {
+        performSegue(withIdentifier: "ComposeSegue", sender: nil)
     }
-    */
+}
 
+// MARK: - Table View Data Source Methods
+
+extension BudgetViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return expenses.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseCell", for: indexPath) as! ExpenseCell
+        
+        let expense = expenses[indexPath.row]
+        
+        // Configure cell with expense data
+        cell.titleLabel.text = expense.title
+        cell.amountLabel.text = "$\(String(format: "%.2f", expense.amount))"
+        
+        // Set category image background color based on category
+        let categoryColor = categoryColors[expense.category] ?? .systemGray
+        cell.categoryImageView.backgroundColor = categoryColor
+//        cell.categoryImageView.layer.cornerRadius = cell.categoryImageView.frame.height / 2
+        cell.categoryImageView.clipsToBounds = true
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Remove the expense
+            let expenseToRemove = expenses[indexPath.row]
+            expenses.remove(at: indexPath.row)
+            
+            // Save updated expenses (need to implement deletion in Expense model)
+            var currentExpenses = Expense.getExpense()
+            if let index = currentExpenses.firstIndex(where: { $0.id == expenseToRemove.id }) {
+                currentExpenses.remove(at: index)
+                Expense.save(currentExpenses)
+            }
+            
+            // Delete the row
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            // Update pie chart
+            calculateCategoryData()
+            updatePieChart()
+        }
+    }
+}
+
+// MARK: - Table View Delegate Methods
+
+extension BudgetViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        // Handle expense selection (e.g., for editing)
+        let selectedExpense = expenses[indexPath.row]
+        
+        // You might want to implement navigation to expense editing screen here
+        // Similar to TaskListViewController's implementation
+    }
+}
+
+// Add this to the BudgetViewController class
+extension UIColor {
+    // Initialize with hex string like "#FF0000" or "FF0000"
+    convenience init(hex: String) {
+        let hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        let scanner = Scanner(string: hexString)
+        
+        if hexString.hasPrefix("#") {
+            scanner.currentIndex = hexString.index(after: hexString.startIndex)
+        }
+        
+        var color: UInt64 = 0
+        scanner.scanHexInt64(&color)
+        
+        let mask = 0x000000FF
+        let r = Int(color >> 16) & mask
+        let g = Int(color >> 8) & mask
+        let b = Int(color) & mask
+        
+        let red   = CGFloat(r) / 255.0
+        let green = CGFloat(g) / 255.0
+        let blue  = CGFloat(b) / 255.0
+        
+        self.init(red: red, green: green, blue: blue, alpha: 1)
+    }
+    
+    // Initialize with RGBA values (0-255)
+    convenience init(r: Int, g: Int, b: Int, a: CGFloat = 1.0) {
+        self.init(
+            red: CGFloat(r) / 255.0,
+            green: CGFloat(g) / 255.0,
+            blue: CGFloat(b) / 255.0,
+            alpha: a
+        )
+    }
 }
