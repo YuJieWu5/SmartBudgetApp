@@ -20,6 +20,8 @@
 		7BCA20B22DBAF0B800D98278 /* ExpenseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20AD2DBAF0B800D98278 /* ExpenseCell.swift */; };
 		7BCA20B32DBAF0B800D98278 /* BudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20AE2DBAF0B800D98278 /* BudgetViewController.swift */; };
 		7BCA20B42DBAF0B800D98278 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20AF2DBAF0B800D98278 /* PieChartView.swift */; };
+		7BCA20B62DBB008200D98278 /* GroupExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20B52DBB008200D98278 /* GroupExpense.swift */; };
+		7BCA20B82DBB03EB00D98278 /* GroupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20B72DBB03EB00D98278 /* GroupDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		7BCA20AD2DBAF0B800D98278 /* ExpenseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpenseCell.swift; sourceTree = "<group>"; };
 		7BCA20AE2DBAF0B800D98278 /* BudgetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetViewController.swift; sourceTree = "<group>"; };
 		7BCA20AF2DBAF0B800D98278 /* PieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
+		7BCA20B52DBB008200D98278 /* GroupExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupExpense.swift; sourceTree = "<group>"; };
+		7BCA20B72DBB03EB00D98278 /* GroupDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +83,9 @@
 				7B2DEFB92DB03CAC0054542E /* SceneDelegate.swift */,
 				7B2DEFBB2DB03CAC0054542E /* ViewController.swift */,
 				7B2DEFBD2DB03CAC0054542E /* Main.storyboard */,
+				7BCA20B72DBB03EB00D98278 /* GroupDetailsViewController.swift */,
 				7B018B262DBAED9800C4587F /* GroupsViewController.swift */,
+				7BCA20B52DBB008200D98278 /* GroupExpense.swift */,
 				7B018B242DBAED5200C4587F /* GroupCell.swift */,
 				7B2DEFC02DB03CB00054542E /* Assets.xcassets */,
 				7B2DEFC22DB03CB00054542E /* LaunchScreen.storyboard */,
@@ -162,8 +168,10 @@
 				7BCA20B12DBAF0B800D98278 /* Expense.swift in Sources */,
 				7B2DEFBC2DB03CAC0054542E /* ViewController.swift in Sources */,
 				7B2DEFB82DB03CAC0054542E /* AppDelegate.swift in Sources */,
+				7BCA20B62DBB008200D98278 /* GroupExpense.swift in Sources */,
 				7BCA20B02DBAF0B800D98278 /* ExpenseComposeViewController.swift in Sources */,
 				7BCA20B32DBAF0B800D98278 /* BudgetViewController.swift in Sources */,
+				7BCA20B82DBB03EB00D98278 /* GroupDetailsViewController.swift in Sources */,
 				7BCA20B22DBAF0B800D98278 /* ExpenseCell.swift in Sources */,
 				7BCA20B42DBAF0B800D98278 /* PieChartView.swift in Sources */,
 				7B2DEFBA2DB03CAC0054542E /* SceneDelegate.swift in Sources */,
