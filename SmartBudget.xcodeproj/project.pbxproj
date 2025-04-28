@@ -110,6 +110,8 @@
 			dependencies = (
 			);
 			name = SmartBudget;
+			packageProductDependencies = (
+			);
 			productName = SmartBudget;
 			productReference = 7B2DEFB42DB03CAC0054542E /* SmartBudget.app */;
 			productType = "com.apple.product-type.application";
@@ -138,6 +140,8 @@
 				Base,
 			);
 			mainGroup = 7B2DEFAB2DB03CAB0054542E;
+			packageReferences = (
+			);
 			productRefGroup = 7B2DEFB52DB03CAC0054542E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -341,9 +345,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
+				OTHER_SWIFT_FLAGS = "-enable-experimental-feature AccessLevelOnImport";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujiewu5.SmartBudget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ENABLE_EXPERIMENTAL_FEATURES = AccessLevelOnImport;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -369,9 +376,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
+				OTHER_SWIFT_FLAGS = "-enable-experimental-feature AccessLevelOnImport";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujiewu5.SmartBudget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ENABLE_EXPERIMENTAL_FEATURES = AccessLevelOnImport;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
