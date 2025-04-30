@@ -27,6 +27,8 @@ class BudgetViewController: UIViewController {
     // Category data for pie chart
     private var categoryData: [(category: String, value: Double, color: UIColor)] = []
     
+    private let activityIndicator = UIActivityIndicatorView(style: .medium)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +39,14 @@ class BudgetViewController: UIViewController {
         // Hide top cell separator
         tableView.tableHeaderView = UIView()
         
+        // Setup activity indicator
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        
         setupPieChart()
+        
+//        refreshExpenses()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,12 +57,20 @@ class BudgetViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ComposeSegue" {
             if let composeNavController = segue.destination as? UINavigationController,
-               let composeViewController = composeNavController.topViewController as? ExpenseComposeViewController{
+               let composeViewController = composeNavController.topViewController as? ExpenseComposeViewController {
                 composeViewController.onComposeExpense = { [weak self] expense in
                     print("###prepare")
-                    print(expense)
-                    expense.save()
-                    self?.refreshExpenses()
+                    
+                    // Show activity indicator immediately
+                    DispatchQueue.main.async {
+                        self?.activityIndicator.startAnimating()
+                    }
+                    
+                    // Save expense using async/await
+                    Task {
+                        await expense.save()
+                        await self?.refreshExpenses()
+                    }
                 }
             }
         }
@@ -62,26 +79,36 @@ class BudgetViewController: UIViewController {
     // MARK: - Helper Functions
     
     private func refreshExpenses() {
-        // Get current saved expenses
-        var expenses = Expense.getExpense()
+        // Start loading indicator
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+        }
         
-        // Sort from new to old
-        expenses.sort { $0.date > $1.date }
-        
-        // Update the main expenses array
-        self.expenses = expenses
-        
-        // Hide the "empty state label" if there are expenses
-        emptyStateLabel.isHidden = !expenses.isEmpty
-        
-        // Calculate category data for pie chart
-        calculateCategoryData()
-        
-        // Update pie chart with new data
-        updatePieChart()
-        
-        // Reload the table view to reflect updates
-        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        Task {
+            // Fetch expenses from Supabase
+            let fetchedExpenses = await Expense.getExpenses()
+            
+            // Update UI on main thread
+            await MainActor.run {
+                // Update the main expenses array
+                self.expenses = fetchedExpenses
+                
+                // Hide the "empty state label" if there are expenses
+                emptyStateLabel.isHidden = !fetchedExpenses.isEmpty
+                
+                // Calculate category data for pie chart
+                calculateCategoryData()
+                
+                // Update pie chart with new data
+                updatePieChart()
+                
+                // Reload the table view to reflect updates
+                tableView.reloadData()
+                
+                // Stop loading indicator
+                activityIndicator.stopAnimating()
+            }
+        }
     }
     
     private func calculateCategoryData() {
@@ -195,23 +222,23 @@ extension BudgetViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Remove the expense
-            let expenseToRemove = expenses[indexPath.row]
+            // Get the expense to delete
+            let expenseToDelete = expenses[indexPath.row]
+            
+            // Remove from array
             expenses.remove(at: indexPath.row)
             
-            // Save updated expenses (need to implement deletion in Expense model)
-            var currentExpenses = Expense.getExpense()
-            if let index = currentExpenses.firstIndex(where: { $0.id == expenseToRemove.id }) {
-                currentExpenses.remove(at: index)
-                Expense.save(currentExpenses)
-            }
-            
-            // Delete the row
+            // Delete row from table
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
             // Update pie chart
             calculateCategoryData()
             updatePieChart()
+            
+            // Delete from Supabase
+            Task {
+                await Expense.delete(id: expenseToDelete.id)
+            }
         }
     }
 }
@@ -222,12 +249,10 @@ extension BudgetViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        
-        // Handle expense selection (e.g., for editing)
+
         let selectedExpense = expenses[indexPath.row]
         
-        // You might want to implement navigation to expense editing screen here
-        // Similar to TaskListViewController's implementation
+        // (Future Feature) Implement navigation to expense editing screen here
     }
 }
 
