@@ -52,23 +52,15 @@ class SupabaseManager {
     
     // Check if user is signed in
     func isSignedIn() async -> Bool {
-        do {
-            let session = try? await supabase.auth.session
-            return session != nil
-        } catch {
-            return false
-        }
+        let session = try? await supabase.auth.session
+        return session != nil
     }
     
     // Get current user
     func getCurrentUser() async -> User? {
-        do {
-            if let session = try? await supabase.auth.session {
-                return session.user
-            }
-            return nil
-        } catch {
-            return nil
+        if let session = try? await supabase.auth.session {
+            return session.user
         }
+        return nil
     }
 }
