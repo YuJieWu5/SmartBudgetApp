@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Supabase
 
-class GroupsViewController: UIViewController, UITableViewDataSource {
+class GroupsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
     }
@@ -17,53 +18,134 @@ class GroupsViewController: UIViewController, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.groupNameLabel.text = groups[indexPath.row]
+        let group = groups[indexPath.row]
+        cell.groupNameLabel.text = group.groupName
+        
         return cell
     }
     
-    private var groups = ["NY Travel", "Seattle", "Apt123"]
-
+    // MARK: - UITableViewDelegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        print(groups[indexPath.row])
+        performSegue(withIdentifier: "ShowGroupDetailsSegue", sender: groups[indexPath.row])
+    }
+    
+    var groups: [Group] = []
+    var currentUserId: String = ""
+    var currentUserName: String = ""
+    
     @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
-        // Do any additional setup after loading the view.
+        
+        // Get current user ID when view loads
+        Task {
+            await fetchCurrentUser()
+            await loadGroups()
+        }
     }
     
-
-    @IBAction func didTapAddGroupButton(_ sender: Any) {
-        let alertController = UIAlertController(title: "Add New Group", message: "Please enter a group name", preferredStyle: .alert)
-        
-        // Add text field to alert
-        alertController.addTextField { textField in
-            textField.placeholder = "Group Name"
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await loadGroups()
         }
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Preparing for segue: \(String(describing: segue.identifier))")
+        print("Sender: \(String(describing: sender))")
         
-        // Create Add action
-        let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
-            guard let self = self,
-                  let textField = alertController.textFields?.first,
-                  let groupName = textField.text,
-                  !groupName.isEmpty else {
-                return
+        if segue.identifier == "ShowGroupDetailsSegue",
+           let groupDetailsVC = segue.destination as? GroupDetailsViewController {
+            guard let selectedIndexPath = tableView.indexPathForSelectedRow else { return }
+            let selectedGroup = groups[selectedIndexPath.row]
+            print("Setting group: \(selectedGroup)")
+            groupDetailsVC.group = selectedGroup
+        } else {
+            print("Failed to set group - conditions not met")
+            
+            // Debug what's failing
+            if segue.identifier != "ShowGroupDetailsSegue" {
+                print("Wrong segue identifier: \(String(describing: segue.identifier))")
             }
             
-            // Add new group to array
-            self.groups.append(groupName)
+            if !(segue.destination is GroupDetailsViewController) {
+                print("Destination is not GroupDetailsViewController: \(type(of: segue.destination))")
+            }
             
-            // Reload table view to display the new group
-            self.tableView.reloadData()
+            if !(sender is Group) {
+                print("Sender is not Group: \(type(of: sender))")
+            }
+        }
+    }
+    
+    func fetchCurrentUser() async {
+        if let user = await SupabaseManager.shared.getCurrentUser() {
+            currentUserId = user.id.uuidString.lowercased()
+            currentUserName = await SupabaseManager.shared.getCurrentUserName()
+            print(currentUserId)
+        } else {
+            // Handle case where user is not logged in
+            // You might want to redirect to login screen
+            print("User not logged in")
+        }
+    }
+    
+    func loadGroups() async {
+        do {
+            if !currentUserId.isEmpty {
+                groups = try await Group.fetchGroupsForUser(userId: currentUserId)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        } catch {
+            print("Error fetching groups: \(error)")
+            // Show error alert to user
+        }
+    }
+    
+    
+    @IBAction func didTapAddGroupButton(_ sender: Any) {
+        // Create alert with text field for group name
+        let alert = UIAlertController(title: "New Group", message: "Enter group name", preferredStyle: .alert)
+        
+        alert.addTextField { textField in
+            textField.placeholder = "Group name"
         }
         
-        // Create Cancel action
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        // Add actions to alert controller
-        alertController.addAction(addAction)
-        alertController.addAction(cancelAction)
+        let createAction = UIAlertAction(title: "Create", style: .default) { [weak self] _ in
+            guard let self = self,
+                  let textField = alert.textFields?.first,
+                  let groupName = textField.text, !groupName.isEmpty else { return }
+            
+            // Create new group with current user as a member
+            print("my id in groups view controller page: \(self.currentUserId)")
+            let newGroup = Group(name: groupName, members: [self.currentUserId], member_names: [self.currentUserName])
+            
+            // Save group asynchronously
+            Task {
+                do {
+                    try await newGroup.save()
+                    await self.loadGroups()
+                } catch {
+                    print("Error saving group: \(error)")
+                    // Show error alert to user
+                }
+            }
+        }
         
-        // Present alert controller
-        present(alertController, animated: true)
+        alert.addAction(cancelAction)
+        alert.addAction(createAction)
+        
+        present(alert, animated: true)
     }
-
+    
 }

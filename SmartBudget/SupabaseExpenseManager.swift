@@ -15,7 +15,7 @@ class SupabaseExpenseManager {
     
     // Fetch all expenses for the current user
     func getExpenses() async throws -> [Expense] {
-        guard let user = try? await SupabaseManager.shared.getCurrentUser() else {
+        guard let user = await SupabaseManager.shared.getCurrentUser() else {
             throw NSError(domain: "Not authenticated", code: 401)
         }
         print(user.id)
@@ -36,7 +36,7 @@ class SupabaseExpenseManager {
             print("Received data object - attempting to parse JSON")
             do {
                 let jsonObject = try JSONSerialization.jsonObject(with: data)
-                print("Converted to JSON: \(jsonObject)")
+//                print("Converted to JSON: \(jsonObject)")
                 
                 if let expensesArray = jsonObject as? [[String: Any]] {
                     // Create a custom decoder with date formatter for YYYY-MM-DD format

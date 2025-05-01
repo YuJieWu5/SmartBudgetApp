@@ -63,4 +63,24 @@ class SupabaseManager {
         }
         return nil
     }
+    
+    func getCurrentUserName() async -> String {
+        if let user = await getCurrentUser() {
+            // Try to get the name from user metadata
+            if let metadata = user.userMetadata as? [String: Any],
+               let name = metadata["name"] as? String {
+                return name
+            }
+            
+            // If name is not in metadata, use the email or a default
+            if let email = user.email {
+                // Extract name from email (before @)
+                if let atIndex = email.firstIndex(of: "@") {
+                    return String(email[..<atIndex])
+                }
+                return email
+            }
+        }
+        return "Anonymous User"
+    }
 }
