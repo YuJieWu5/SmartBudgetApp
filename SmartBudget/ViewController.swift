@@ -75,6 +75,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Set up password field to hide text
         passwordTextField.isSecureTextEntry = true
         
