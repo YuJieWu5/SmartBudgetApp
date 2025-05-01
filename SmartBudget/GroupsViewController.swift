@@ -57,8 +57,6 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("Preparing for segue: \(String(describing: segue.identifier))")
-        print("Sender: \(String(describing: sender))")
         
         if segue.identifier == "ShowGroupDetailsSegue",
            let groupDetailsVC = segue.destination as? GroupDetailsViewController {
