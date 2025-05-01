@@ -18,7 +18,7 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         
         //setup input formate
-        passwordField.isSecureTextEntry = true
+//        passwordField.isSecureTextEntry = true
         
         emailField.keyboardType = .emailAddress
         emailField.autocapitalizationType = .none
