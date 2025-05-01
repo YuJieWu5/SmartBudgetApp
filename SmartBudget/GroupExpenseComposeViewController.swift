@@ -21,7 +21,7 @@ class GroupExpenseComposeViewController: UIViewController {
     weak var delegate: GroupExpenseComposeDelegate?
     var currentUserId: String = ""
     var currentUserName: String = ""
-    var selectedPayerId: String = ""
+    var selectedPayerName: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +42,7 @@ class GroupExpenseComposeViewController: UIViewController {
             
             let action = UIAction(title: memberName) { [weak self] _ in
                 guard let self = self else { return }
-                self.selectedPayerId = memberId
+                self.selectedPayerName = memberName
                 self.paidByButton.setTitle(memberName, for: .normal)
             }
             
@@ -65,17 +65,21 @@ class GroupExpenseComposeViewController: UIViewController {
         guard let title = titleTextField.text, !title.isEmpty,
               let amountText = amountTextField.text, !amountText.isEmpty,
               let amount = Double(amountText),
-              !selectedPayerId.isEmpty,
+              !selectedPayerName.isEmpty,
               !group.id.isEmpty else {
             showAlert(message: "Please fill in all fields")
             return
         }
         
-        // Create new expense
+        // Find the user ID for the selected payer name
+        let payerIndex = group.memberNames.firstIndex(of: selectedPayerName) ?? -1
+        let payerId = payerIndex >= 0 ? group.groupMembers[payerIndex] : selectedPayerName
+        
+        // Create new expense with the correct user ID
         let newExpense = GroupExpense(
             title: title,
             amount: amount,
-            paidBy: selectedPayerId,
+            paidBy: payerId,
             group_id: group.id
         )
         
@@ -83,12 +87,25 @@ class GroupExpenseComposeViewController: UIViewController {
         Task {
             do {
                 try await newExpense.save()
+                print("Expense saved successfully")
                 
                 // Notify delegate on main thread
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    
                     self.delegate?.didCreateExpense(newExpense)
-                    // Dismiss
-                    self.navigationController?.popViewController(animated: true)
+                    print("Called delegate didCreateExpense")
+                    
+                    // Comprehensive dismissal approach
+                    if let presentingVC = self.presentingViewController {
+                        print("Dismissing presented view controller")
+                        self.dismiss(animated: true)
+                    } else if let nav = self.navigationController {
+                        print("Popping from navigation stack")
+                        nav.popViewController(animated: true)
+                    } else {
+                        print("No navigation or presenting context found")
+                    }
                 }
             } catch {
                 print("Error saving expense: \(error)")
@@ -101,7 +118,17 @@ class GroupExpenseComposeViewController: UIViewController {
     }
     
     @IBAction func didTapCancelButton(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        print("Cancel button tapped")
+        
+        if let presentingVC = self.presentingViewController {
+            print("Dismissing presented view controller")
+            self.dismiss(animated: true)
+        } else if let nav = self.navigationController {
+            print("Popping from navigation stack")
+            nav.popViewController(animated: true)
+        } else {
+            print("No navigation or presenting context found")
+        }
     }
     
     func showAlert(message: String) {
