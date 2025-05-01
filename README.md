@@ -99,11 +99,11 @@ Smart Budget App is a modern finance tracker that allows users to record their e
 
 ## Schema 
 ### Models
-#### User
+#### User(Supabase Auth)
 | Property     | Type     | Description |
 | ------------ | -------- | ----------- |
-| userid       | String   | unique identifier for the user |
-| username     | String   | username for login |
+| id           | UUID     | unique identifier for the user |
+| name         | String   | username for login |
 | email        | String   | user's email address |
 | password     | String   | user's password |
 
@@ -111,7 +111,8 @@ Smart Budget App is a modern finance tracker that allows users to record their e
 #### Expense
 | Property      | Type     | Description |
 | ------------- | -------- | ----------- |
-| expenseid     | String   | unique identifier for the epxense |
+| id            | UUID     | unique identifier for the epxense |
+| user_id       | UUID     | who create this expense |
 | title         | String   | title of the expense |
 | amount        | Double   | the amount of the expense |
 | category      | String   | type of expense |
@@ -120,23 +121,25 @@ Smart Budget App is a modern finance tracker that allows users to record their e
 #### Group
 | Property     | Type     | Description |
 | ------------ | -------- | ----------- |
-| groupid      | String   | unique identifier for the group |
-| groupmembers | Array    | array of member id|
-| groupname    | String   | name of the group |
+| id           | UUID   | unique identifier for the group |
+| group_name    | String   | name of the group |
+| group_members | Array    | array of member id |
+| member_names   | String  | list of group member's name |
 
 #### Group Expense
 | Property      | Type     | Description |
 | ------------- | -------- | ----------- |
-| expenseid     | String   | unique identifier for the epxense |
+| id            | UUID   | unique identifier for the epxense |
+| group_id      | UUID   | unique identifier for the group |
 | title         | String   | title of the expense |
 | amount        | Double   | the amount of the expense |
-| paidby        | String   | who paid this expense |
+| paid_by       | String   | who paid this expense |
 
 
 
 ### Networking
 
-- Plan to use Firebase Authorization, Storage, RealTime Database to handle database and authorization process. Firebase provides official SDKs for iOS app development rather than direct API endpoints.
+- Plan to use Supabase Authorization, Storage, RealTime Database to handle database and authorization process. Supabase provides official SDKs for iOS app development rather than direct API endpoints.
 
 #### Basic Network Request Example
 - (Optional) AI Assistant feature, using OpenAI API
@@ -256,3 +259,6 @@ func uploadExpensePDF(completion: @escaping (String?) -> Void) {
     task.resume()
 }
 ```
+
+## Video Walkthrough
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ulk-BJveMXg?si=Vikw-1ilIVUY7kGg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
