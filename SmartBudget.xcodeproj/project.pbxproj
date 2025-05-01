@@ -22,9 +22,26 @@
 		7BCA20B42DBAF0B800D98278 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20AF2DBAF0B800D98278 /* PieChartView.swift */; };
 		7BCA20B62DBB008200D98278 /* GroupExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20B52DBB008200D98278 /* GroupExpense.swift */; };
 		7BCA20B82DBB03EB00D98278 /* GroupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20B72DBB03EB00D98278 /* GroupDetailsViewController.swift */; };
+		7BCA20C62DC0212600D98278 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCA20C52DC0212600D98278 /* Auth */; };
+		7BCA20C82DC0212600D98278 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCA20C72DC0212600D98278 /* Functions */; };
+		7BCA20CA2DC0212600D98278 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCA20C92DC0212600D98278 /* PostgREST */; };
+		7BCA20CC2DC0212600D98278 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCA20CB2DC0212600D98278 /* Realtime */; };
+		7BCA20CE2DC0212600D98278 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCA20CD2DC0212600D98278 /* Storage */; };
+		7BCA20D02DC0212600D98278 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCA20CF2DC0212600D98278 /* Supabase */; };
+		7BCA20D22DC0214400D98278 /* Supabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20D12DC0214400D98278 /* Supabase.swift */; };
+		7BCA20D42DC023E100D98278 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20D32DC023E100D98278 /* SignUpViewController.swift */; };
+		7BCA20D62DC025A700D98278 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20D52DC025A700D98278 /* ProfileViewController.swift */; };
+		7BCA20D82DC0268E00D98278 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20D72DC0268E00D98278 /* SupabaseManager.swift */; };
+		7BCA20DA2DC1F5A000D98278 /* SupabaseExpenseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20D92DC1F5A000D98278 /* SupabaseExpenseManager.swift */; };
+		7BCA20DE2DC2EEBF00D98278 /* GroupExpenseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20DD2DC2EEBF00D98278 /* GroupExpenseCell.swift */; };
+		7BCA20E02DC2F2EF00D98278 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20DF2DC2F2EF00D98278 /* Group.swift */; };
+		7BCA20E22DC2F96000D98278 /* GroupExpenseComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20E12DC2F96000D98278 /* GroupExpenseComposeViewController.swift */; };
+		C0E0E0215CE75BAFA23AB046 /* Pods_SmartBudget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEEDD1CD0B77828C9FCC4DFA /* Pods_SmartBudget.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F827AC341D4E5173810A7C8 /* Pods-SmartBudget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartBudget.release.xcconfig"; path = "Target Support Files/Pods-SmartBudget/Pods-SmartBudget.release.xcconfig"; sourceTree = "<group>"; };
+		4FC08398721747F0FEE50B73 /* Pods-SmartBudget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartBudget.debug.xcconfig"; path = "Target Support Files/Pods-SmartBudget/Pods-SmartBudget.debug.xcconfig"; sourceTree = "<group>"; };
 		7B018B242DBAED5200C4587F /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		7B018B262DBAED9800C4587F /* GroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
 		7B2DEFB42DB03CAC0054542E /* SmartBudget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartBudget.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +59,15 @@
 		7BCA20AF2DBAF0B800D98278 /* PieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		7BCA20B52DBB008200D98278 /* GroupExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupExpense.swift; sourceTree = "<group>"; };
 		7BCA20B72DBB03EB00D98278 /* GroupDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewController.swift; sourceTree = "<group>"; };
+		7BCA20D12DC0214400D98278 /* Supabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supabase.swift; sourceTree = "<group>"; };
+		7BCA20D32DC023E100D98278 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		7BCA20D52DC025A700D98278 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		7BCA20D72DC0268E00D98278 /* SupabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseManager.swift; sourceTree = "<group>"; };
+		7BCA20D92DC1F5A000D98278 /* SupabaseExpenseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseExpenseManager.swift; sourceTree = "<group>"; };
+		7BCA20DD2DC2EEBF00D98278 /* GroupExpenseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupExpenseCell.swift; sourceTree = "<group>"; };
+		7BCA20DF2DC2F2EF00D98278 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		7BCA20E12DC2F96000D98278 /* GroupExpenseComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupExpenseComposeViewController.swift; sourceTree = "<group>"; };
+		EEEDD1CD0B77828C9FCC4DFA /* Pods_SmartBudget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartBudget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +75,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BCA20D02DC0212600D98278 /* Supabase in Frameworks */,
+				7BCA20CE2DC0212600D98278 /* Storage in Frameworks */,
+				7BCA20CA2DC0212600D98278 /* PostgREST in Frameworks */,
+				7BCA20C82DC0212600D98278 /* Functions in Frameworks */,
+				7BCA20C62DC0212600D98278 /* Auth in Frameworks */,
+				7BCA20CC2DC0212600D98278 /* Realtime in Frameworks */,
+				C0E0E0215CE75BAFA23AB046 /* Pods_SmartBudget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +93,8 @@
 			children = (
 				7B2DEFB62DB03CAC0054542E /* SmartBudget */,
 				7B2DEFB52DB03CAC0054542E /* Products */,
+				E5A26E9B1762E4CE11C69BEB /* Pods */,
+				A43EB7169C82ADF81856285B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,6 +109,7 @@
 		7B2DEFB62DB03CAC0054542E /* SmartBudget */ = {
 			isa = PBXGroup;
 			children = (
+				7BCA20D12DC0214400D98278 /* Supabase.swift */,
 				7BCA20AE2DBAF0B800D98278 /* BudgetViewController.swift */,
 				7BCA20AC2DBAF0B700D98278 /* Expense.swift */,
 				7BCA20AD2DBAF0B800D98278 /* ExpenseCell.swift */,
@@ -82,16 +118,40 @@
 				7B2DEFB72DB03CAC0054542E /* AppDelegate.swift */,
 				7B2DEFB92DB03CAC0054542E /* SceneDelegate.swift */,
 				7B2DEFBB2DB03CAC0054542E /* ViewController.swift */,
+				7BCA20D52DC025A700D98278 /* ProfileViewController.swift */,
+				7BCA20D32DC023E100D98278 /* SignUpViewController.swift */,
 				7B2DEFBD2DB03CAC0054542E /* Main.storyboard */,
+				7BCA20DD2DC2EEBF00D98278 /* GroupExpenseCell.swift */,
 				7BCA20B72DBB03EB00D98278 /* GroupDetailsViewController.swift */,
+				7BCA20E12DC2F96000D98278 /* GroupExpenseComposeViewController.swift */,
 				7B018B262DBAED9800C4587F /* GroupsViewController.swift */,
 				7BCA20B52DBB008200D98278 /* GroupExpense.swift */,
+				7BCA20DF2DC2F2EF00D98278 /* Group.swift */,
 				7B018B242DBAED5200C4587F /* GroupCell.swift */,
 				7B2DEFC02DB03CB00054542E /* Assets.xcassets */,
 				7B2DEFC22DB03CB00054542E /* LaunchScreen.storyboard */,
 				7B2DEFC52DB03CB00054542E /* Info.plist */,
+				7BCA20D72DC0268E00D98278 /* SupabaseManager.swift */,
+				7BCA20D92DC1F5A000D98278 /* SupabaseExpenseManager.swift */,
 			);
 			path = SmartBudget;
+			sourceTree = "<group>";
+		};
+		A43EB7169C82ADF81856285B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EEEDD1CD0B77828C9FCC4DFA /* Pods_SmartBudget.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E5A26E9B1762E4CE11C69BEB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4FC08398721747F0FEE50B73 /* Pods-SmartBudget.debug.xcconfig */,
+				2F827AC341D4E5173810A7C8 /* Pods-SmartBudget.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -101,6 +161,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7B2DEFC82DB03CB00054542E /* Build configuration list for PBXNativeTarget "SmartBudget" */;
 			buildPhases = (
+				5896ADEDE3CFA9D95BF2F0F3 /* [CP] Check Pods Manifest.lock */,
 				7B2DEFB02DB03CAC0054542E /* Sources */,
 				7B2DEFB12DB03CAC0054542E /* Frameworks */,
 				7B2DEFB22DB03CAC0054542E /* Resources */,
@@ -110,6 +171,14 @@
 			dependencies = (
 			);
 			name = SmartBudget;
+			packageProductDependencies = (
+				7BCA20C52DC0212600D98278 /* Auth */,
+				7BCA20C72DC0212600D98278 /* Functions */,
+				7BCA20C92DC0212600D98278 /* PostgREST */,
+				7BCA20CB2DC0212600D98278 /* Realtime */,
+				7BCA20CD2DC0212600D98278 /* Storage */,
+				7BCA20CF2DC0212600D98278 /* Supabase */,
+			);
 			productName = SmartBudget;
 			productReference = 7B2DEFB42DB03CAC0054542E /* SmartBudget.app */;
 			productType = "com.apple.product-type.application";
@@ -138,6 +207,9 @@
 				Base,
 			);
 			mainGroup = 7B2DEFAB2DB03CAB0054542E;
+			packageReferences = (
+				7BCA20C42DC0212600D98278 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			productRefGroup = 7B2DEFB52DB03CAC0054542E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -160,23 +232,56 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5896ADEDE3CFA9D95BF2F0F3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SmartBudget-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7B2DEFB02DB03CAC0054542E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BCA20E22DC2F96000D98278 /* GroupExpenseComposeViewController.swift in Sources */,
 				7BCA20B12DBAF0B800D98278 /* Expense.swift in Sources */,
 				7B2DEFBC2DB03CAC0054542E /* ViewController.swift in Sources */,
 				7B2DEFB82DB03CAC0054542E /* AppDelegate.swift in Sources */,
 				7BCA20B62DBB008200D98278 /* GroupExpense.swift in Sources */,
 				7BCA20B02DBAF0B800D98278 /* ExpenseComposeViewController.swift in Sources */,
 				7BCA20B32DBAF0B800D98278 /* BudgetViewController.swift in Sources */,
+				7BCA20E02DC2F2EF00D98278 /* Group.swift in Sources */,
 				7BCA20B82DBB03EB00D98278 /* GroupDetailsViewController.swift in Sources */,
 				7BCA20B22DBAF0B800D98278 /* ExpenseCell.swift in Sources */,
+				7BCA20D42DC023E100D98278 /* SignUpViewController.swift in Sources */,
 				7BCA20B42DBAF0B800D98278 /* PieChartView.swift in Sources */,
+				7BCA20DE2DC2EEBF00D98278 /* GroupExpenseCell.swift in Sources */,
+				7BCA20D22DC0214400D98278 /* Supabase.swift in Sources */,
 				7B2DEFBA2DB03CAC0054542E /* SceneDelegate.swift in Sources */,
+				7BCA20D62DC025A700D98278 /* ProfileViewController.swift in Sources */,
 				7B018B252DBAED5200C4587F /* GroupCell.swift in Sources */,
 				7B018B272DBAED9800C4587F /* GroupsViewController.swift in Sources */,
+				7BCA20DA2DC1F5A000D98278 /* SupabaseExpenseManager.swift in Sources */,
+				7BCA20D82DC0268E00D98278 /* SupabaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +428,7 @@
 		};
 		7B2DEFC92DB03CB00054542E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4FC08398721747F0FEE50B73 /* Pods-SmartBudget.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -341,6 +447,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujiewu5.SmartBudget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -351,6 +459,7 @@
 		};
 		7B2DEFCA2DB03CB00054542E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F827AC341D4E5173810A7C8 /* Pods-SmartBudget.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -369,6 +478,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujiewu5.SmartBudget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -399,6 +510,50 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7BCA20C42DC0212600D98278 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7BCA20C52DC0212600D98278 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BCA20C42DC0212600D98278 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+		7BCA20C72DC0212600D98278 /* Functions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BCA20C42DC0212600D98278 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Functions;
+		};
+		7BCA20C92DC0212600D98278 /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BCA20C42DC0212600D98278 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		7BCA20CB2DC0212600D98278 /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BCA20C42DC0212600D98278 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		7BCA20CD2DC0212600D98278 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BCA20C42DC0212600D98278 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+		};
+		7BCA20CF2DC0212600D98278 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BCA20C42DC0212600D98278 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7B2DEFAC2DB03CAB0054542E /* Project object */;
 }

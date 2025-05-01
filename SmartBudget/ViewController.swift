@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Supabase
 
 class ViewController: UIViewController {
 
@@ -17,21 +18,51 @@ class ViewController: UIViewController {
         print("email: \(String(describing: emailTextField.text))")
         print("password: \(String(describing: passwordTextField.text))")
         
-        guard let email = emailTextField.text, let password = passwordTextField.text else{
+        // Validate input
+        guard let email = emailTextField.text, !email.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty else {
+            showAlert(title: "Missing Information", message: "Please enter your email and password")
             return
         }
         
-        if isValidCredentials(email: email, password: password){
-            performSegue(withIdentifier: "goToMainTabBar", sender: nil)
-        }else{
-            let alert = UIAlertController(
-                title: "Invalid Credentials",
-                message: "Please check your username and password and try again.",
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            self.present(alert, animated: true)
-            
+        // Show loading indicator
+        let loadingIndicator = UIActivityIndicatorView(style: .medium)
+        loadingIndicator.center = view.center
+        loadingIndicator.startAnimating()
+        view.addSubview(loadingIndicator)
+        view.isUserInteractionEnabled = false
+        
+        // Perform sign in with Supabase
+        Task {
+            do {
+                let session = try await SupabaseManager.shared.signIn(
+                    email: email,
+                    password: password
+                )
+                
+                // Successfully signed in
+                await MainActor.run {
+                    loadingIndicator.removeFromSuperview()
+                    view.isUserInteractionEnabled = true
+                    
+                    // Navigate to main screen
+                    self.performSegue(withIdentifier: "goToMainTabBar", sender: nil)
+                }
+            } catch {
+                // Handle error
+                await MainActor.run {
+                    loadingIndicator.removeFromSuperview()
+                    view.isUserInteractionEnabled = true
+                    
+                    let alert = UIAlertController(
+                        title: "Invalid Credentials",
+                        message: "Please check your email and password and try again.",
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
+                }
+            }
         }
     }
     
@@ -44,14 +75,34 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // Set up password field to hide text
+        passwordTextField.isSecureTextEntry = true
+        
+        // Set up keyboard types
+        emailTextField.keyboardType = .emailAddress
+        emailTextField.autocapitalizationType = .none
+        emailTextField.autocorrectionType = .no
+        
+        // Check if user is already signed in
+        checkAuthStatus()
     }
     
-    // Helper function to validate credentials
-    func isValidCredentials(email: String, password: String) -> Bool {
-        
-//        return email == "correctUsername" && password == "correctPassword"
-        return true;
+    private func checkAuthStatus() {
+        Task {
+            if await SupabaseManager.shared.isSignedIn() {
+                // User is already signed in, navigate to main screen
+                await MainActor.run {
+                    self.performSegue(withIdentifier: "goToMainTabBar", sender: nil)
+                }
+            }
+        }
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 
 
