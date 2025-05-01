@@ -261,4 +261,12 @@ func uploadExpensePDF(completion: @escaping (String?) -> Void) {
 ```
 
 ## Video Walkthrough
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Ulk-BJveMXg?si=Vikw-1ilIVUY7kGg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+### Complete YouTube Demo
+[![YouTube Video Title](https://img.youtube.com/vi/Ulk-BJveMXg/0.jpg)](https://www.youtube.com/watch?v=Ulk-BJveMXg)
+
+### Quick Demo: SmartBudget in Action (GIF Preview)
+<div>
+    <a href="https://www.loom.com/share/878a2dc1e1454b00868a8536c3c1fc80">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/878a2dc1e1454b00868a8536c3c1fc80-252ce50dab49390c-full-play.gif">
+    </a>
+</div>
