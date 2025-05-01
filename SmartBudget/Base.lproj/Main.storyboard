@@ -221,7 +221,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="groupNameLabel" destination="mJO-bE-p8A" id="QZL-zJ-awE"/>
-                                            <segue destination="6u2-NY-lZ2" kind="show" id="V9p-Bm-s3Z"/>
+                                            <segue destination="6u2-NY-lZ2" kind="show" identifier="ShowGroupDetailsSegue" id="zo5-ch-apc"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -266,7 +266,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="s5F-Ys-69w">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupExpenseCell" rowHeight="60" id="s5F-Ys-69w" customClass="GroupExpenseCell" customModule="SmartBudget" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="361" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s5F-Ys-69w" id="J6g-US-nQ0">
@@ -293,6 +293,11 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="amountLabel" destination="4Wc-UF-ufE" id="9ek-UT-7Cr"/>
+                                            <outlet property="paidByImageView" destination="LFn-1S-3hx" id="k7D-VO-UM8"/>
+                                            <outlet property="titleLabel" destination="meg-DN-dez" id="u0k-7h-cPY"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -301,6 +306,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Invite"/>
+                                <connections>
+                                    <action selector="didTapInviteButton:" destination="6u2-NY-lZ2" eventType="touchUpInside" id="yje-yC-Bmy"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="F4c-Tw-cJG"/>
@@ -311,10 +319,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Group Details" id="3R1-yv-ZAW">
-                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="dwk-dJ-WDv"/>
+                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="dwk-dJ-WDv">
+                            <connections>
+                                <action selector="didTapNewExpenseButton:" destination="6u2-NY-lZ2" id="fUc-Ph-BCH"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="cAl-vi-06r" kind="presentation" id="GCU-8n-mcc"/>
+                        <outlet property="pieChartView" destination="jIC-YS-vBh" id="udc-xk-eDg"/>
+                        <outlet property="tableView" destination="pbU-nc-rOy" id="tOS-lZ-ByI"/>
+                        <segue destination="cAl-vi-06r" kind="presentation" identifier="AddGroupExpenseComposeSegue" id="GCU-8n-mcc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xhf-Ba-LEz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -324,7 +338,7 @@
         <!--Add Group Expense-->
         <scene sceneID="nVK-2b-pn3">
             <objects>
-                <viewController id="uwP-tb-V5I" sceneMemberID="viewController">
+                <viewController id="uwP-tb-V5I" customClass="GroupExpenseComposeViewController" customModule="SmartBudget" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="A5a-r9-qas">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -406,6 +420,11 @@
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="8hh-KR-5Xf"/>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="VxJ-WC-r4K"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="amountTextField" destination="8he-eq-Q59" id="9FK-bQ-TSB"/>
+                        <outlet property="paidByButton" destination="5wg-XS-cR6" id="szK-jT-NXG"/>
+                        <outlet property="titleTextField" destination="jcf-eU-VP6" id="DU6-uu-PjO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LQM-H5-hCb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

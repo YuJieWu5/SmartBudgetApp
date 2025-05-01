@@ -33,6 +33,9 @@
 		7BCA20D62DC025A700D98278 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20D52DC025A700D98278 /* ProfileViewController.swift */; };
 		7BCA20D82DC0268E00D98278 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20D72DC0268E00D98278 /* SupabaseManager.swift */; };
 		7BCA20DA2DC1F5A000D98278 /* SupabaseExpenseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20D92DC1F5A000D98278 /* SupabaseExpenseManager.swift */; };
+		7BCA20DE2DC2EEBF00D98278 /* GroupExpenseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20DD2DC2EEBF00D98278 /* GroupExpenseCell.swift */; };
+		7BCA20E02DC2F2EF00D98278 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20DF2DC2F2EF00D98278 /* Group.swift */; };
+		7BCA20E22DC2F96000D98278 /* GroupExpenseComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCA20E12DC2F96000D98278 /* GroupExpenseComposeViewController.swift */; };
 		C0E0E0215CE75BAFA23AB046 /* Pods_SmartBudget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEEDD1CD0B77828C9FCC4DFA /* Pods_SmartBudget.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +64,9 @@
 		7BCA20D52DC025A700D98278 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		7BCA20D72DC0268E00D98278 /* SupabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseManager.swift; sourceTree = "<group>"; };
 		7BCA20D92DC1F5A000D98278 /* SupabaseExpenseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseExpenseManager.swift; sourceTree = "<group>"; };
+		7BCA20DD2DC2EEBF00D98278 /* GroupExpenseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupExpenseCell.swift; sourceTree = "<group>"; };
+		7BCA20DF2DC2F2EF00D98278 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		7BCA20E12DC2F96000D98278 /* GroupExpenseComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupExpenseComposeViewController.swift; sourceTree = "<group>"; };
 		EEEDD1CD0B77828C9FCC4DFA /* Pods_SmartBudget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartBudget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -115,9 +121,12 @@
 				7BCA20D52DC025A700D98278 /* ProfileViewController.swift */,
 				7BCA20D32DC023E100D98278 /* SignUpViewController.swift */,
 				7B2DEFBD2DB03CAC0054542E /* Main.storyboard */,
+				7BCA20DD2DC2EEBF00D98278 /* GroupExpenseCell.swift */,
 				7BCA20B72DBB03EB00D98278 /* GroupDetailsViewController.swift */,
+				7BCA20E12DC2F96000D98278 /* GroupExpenseComposeViewController.swift */,
 				7B018B262DBAED9800C4587F /* GroupsViewController.swift */,
 				7BCA20B52DBB008200D98278 /* GroupExpense.swift */,
+				7BCA20DF2DC2F2EF00D98278 /* Group.swift */,
 				7B018B242DBAED5200C4587F /* GroupCell.swift */,
 				7B2DEFC02DB03CB00054542E /* Assets.xcassets */,
 				7B2DEFC22DB03CB00054542E /* LaunchScreen.storyboard */,
@@ -253,16 +262,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BCA20E22DC2F96000D98278 /* GroupExpenseComposeViewController.swift in Sources */,
 				7BCA20B12DBAF0B800D98278 /* Expense.swift in Sources */,
 				7B2DEFBC2DB03CAC0054542E /* ViewController.swift in Sources */,
 				7B2DEFB82DB03CAC0054542E /* AppDelegate.swift in Sources */,
 				7BCA20B62DBB008200D98278 /* GroupExpense.swift in Sources */,
 				7BCA20B02DBAF0B800D98278 /* ExpenseComposeViewController.swift in Sources */,
 				7BCA20B32DBAF0B800D98278 /* BudgetViewController.swift in Sources */,
+				7BCA20E02DC2F2EF00D98278 /* Group.swift in Sources */,
 				7BCA20B82DBB03EB00D98278 /* GroupDetailsViewController.swift in Sources */,
 				7BCA20B22DBAF0B800D98278 /* ExpenseCell.swift in Sources */,
 				7BCA20D42DC023E100D98278 /* SignUpViewController.swift in Sources */,
 				7BCA20B42DBAF0B800D98278 /* PieChartView.swift in Sources */,
+				7BCA20DE2DC2EEBF00D98278 /* GroupExpenseCell.swift in Sources */,
 				7BCA20D22DC0214400D98278 /* Supabase.swift in Sources */,
 				7B2DEFBA2DB03CAC0054542E /* SceneDelegate.swift in Sources */,
 				7BCA20D62DC025A700D98278 /* ProfileViewController.swift in Sources */,
